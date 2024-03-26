@@ -11,13 +11,14 @@ with open('wp_posts.csv', newline='', encoding='utf-8') as csvfile:
         dicts1.append(dict_row)
 df1 = pd.DataFrame(dicts1)
 
+
 with open('revision_table.csv', newline='', encoding='utf-8') as csvfile:
     reader = csv.DictReader(csvfile)
     for row in reader:
         dict_row = dict(row)
         dicts2.append(dict_row)
-
 df2 = pd.DataFrame(dicts2)
+# df as a dict
 
 def merge_posts(dff):
     indices_to_drop = []
