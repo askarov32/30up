@@ -19,27 +19,27 @@ with open('revision_table.csv', newline='', encoding='utf-8') as csvfile:
 
 df2 = pd.DataFrame(dicts2)
 
-def merge_posts(df):
+def merge_posts(dff):
     indices_to_drop = []
-    for index, row in df.iterrows():
+    for index, row in dff.iterrows():
         post_id = row['ID']
         inherits = []
-        for i, r in df.iterrows():
+        for i, r in dff.iterrows():
             if r['post_parent'] == post_id and r['post_type'] == 'post':
                 row['post_content'] += (r['post_content'] + ' NEW POST ')
                 indices_to_drop.append(i)
                 inherits.append(i)
         row['post_inherits'] = inherits
 
-    for index, row in df.iterrows():
+    for index, row in dff.iterrows():
         if row['post_status'] == 'draft' or row['post_status'] == 'auto_draft':
             indices_to_drop.append(index)
         if row['post_content'] == '':
             indices_to_drop.append(index)
-    df.drop(indices_to_drop, inplace=True)
-    df.reset_index(drop=True, inplace=True)
+    dff.drop(indices_to_drop, inplace=True)
+    dff.reset_index(drop=True, inplace=True)
     return dff
 
 
-output = merge_posts(df)
+output = merge_posts(df1)
 output.to_csv('output.csv', index=False)
